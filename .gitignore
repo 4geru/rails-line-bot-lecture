@@ -23,3 +23,6 @@
 
 # rubymineの設定ファイル
 /**/.idea
+
+# .envファイル
+.env
