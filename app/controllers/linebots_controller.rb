@@ -37,10 +37,17 @@ class LinebotsController < ApplicationController
   def message(event)
     case event
     when Line::Bot::Event::Message
-      {
-        type: 'text',
-        text: event['message']['text']
-      }
+      if event['message']['text'] =~ /ハロー/
+        {
+          type: 'text',
+          text: 'こんにちは！！'
+        }
+      else
+        {
+          type: 'text',
+          text: event['message']['text']
+        }
+      end
     end
   end
 end
