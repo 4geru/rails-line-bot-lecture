@@ -38,10 +38,16 @@ class LinebotsController < ApplicationController
     case event
     when Line::Bot::Event::Message
       if event['message']['text'] =~ /ハロー/
-        {
-          type: 'text',
-          text: 'こんにちは！！'
-        }
+        [
+          {
+            type: 'text',
+            text: 'こんにちは！！'
+          },
+          {
+            type: 'text',
+            text: 'こんにちは！！'
+          }
+        ]
       else
         {
           type: 'text',

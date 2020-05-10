@@ -41,13 +41,13 @@ RSpec.describe LinebotsController, type: :request do
         expect(response).to have_http_status(:ok)
       end
 
-      it 'check event type' do
+      xit 'check event type' do
         subject
         event_class = controller.send(:events).first
         expect(controller.send(:message, event_class)[:type]).to eq 'text'
       end
 
-      xit 'check event type' do
+      it 'check event type' do
         subject
         event_class = controller.send(:events).first
         expect(controller.send(:message, event_class).first[:type]).to eq 'text'
