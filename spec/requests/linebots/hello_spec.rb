@@ -47,13 +47,6 @@ RSpec.describe LinebotsController, type: :request do
         expect(controller.send(:message, event_class)[:type]).to eq 'text'
       end
 
-      xit 'check event type' do
-        subject
-        event_class = controller.send(:events).first
-        expect(controller.send(:message, event_class).first[:type]).to eq 'text'
-        expect(controller.send(:message, event_class).second[:type]).to eq 'text'
-      end
-
       it 'check content' do
         subject
         event_class = controller.send(:events).first
