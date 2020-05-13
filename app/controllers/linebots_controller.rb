@@ -35,6 +35,7 @@ class LinebotsController < ApplicationController
   end
 
   def message(event)
+    # ここに書いていく
     case event
     when Line::Bot::Event::Message
       {
