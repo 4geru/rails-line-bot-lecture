@@ -1,5 +1,8 @@
 {
-  "name": "line-lecture",
+  "name": "ok",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "@rails/ujs": "^6.0.0"
+  },
+  "version": "0.1.0"
 }
