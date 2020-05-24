@@ -37,11 +37,17 @@ class LinebotsController < ApplicationController
   def message(event)
     # ここに書いていく
     case event
+    when Line::Bot::Event::Postback
+      LineBot::PostbackEvent.send(event['postback']['data'])
     when Line::Bot::Event::Message
-      {
-        type: 'text',
-        text: event['message']['text']
-      }
+      if event['message']['text'] =~ /カテゴリ/
+        LineBot::Messages::LargeCategoriesMessage.new.send
+      else
+        {
+          type: 'text',
+          text: event['message']['text']
+        }
+      end
     end
   end
 end
