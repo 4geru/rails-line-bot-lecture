@@ -40,13 +40,19 @@ class LinebotsController < ApplicationController
     when Line::Bot::Event::Postback
       LineBot::PostbackEvent.send(event['postback']['data'])
     when Line::Bot::Event::Message
+      # event['message']['text'] = ユーザーが送ってきた
       if event['message']['text'] =~ /カテゴリ/
         LineBot::Messages::LargeCategoriesMessage.new.send
+      elsif event['message']['text'] =~ /FlexMessage/
+        LineBot::Messages::SampleMessage.new.send
+      elsif  event['message']['text'] =~ /じゃんけん/
+        LineBot::Messages::JankenMessage.new.send
       else
         {
           type: 'text',
           text: event['message']['text']
         }
+        nil
       end
     end
   end

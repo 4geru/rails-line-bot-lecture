@@ -12,10 +12,7 @@ module LineBot
       when 'none'
         # noneの時は何もしない
       when 'janken_result'
-        {
-          type: 'text',
-          text: 'コンピュータは' + ['ぐー', 'ちょき', 'ぱー'].sample + 'を出しました'
-        }
+        LineBot::Messages::JankenResultMessage.new.send(data)
       when 'middle_search'
         middle_categories = Category.where(parent_category_id: data['category_id'].to_i)
         LineBot::Messages::MiddleCategoriesMessage.new.send(middle_categories)
