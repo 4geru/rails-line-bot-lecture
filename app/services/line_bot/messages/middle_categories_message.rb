@@ -6,13 +6,17 @@ module LineBot
     class MiddleCategoriesMessage
       include LineBot::Messages::Concern::Carouselable
 
-      def send(middle_categories)
+      def send(large_category_id)
+        @category = Category.find_by(category_id: large_category_id)
+
+        middle_categories = Category.where(parent_category_id: large_category_id)
+
         bubbles = []
         middle_categories.each_slice(5) do |categories|
           bubbles << bubble(categories)
         end
 
-        carousel('中カテゴリ検索', bubbles)
+        carousel("#{@category.name}検索", bubbles)
       end
 
       def category_button(category)
@@ -24,10 +28,12 @@ module LineBot
               "type": "text",
               "text": category.name,
               "gravity": "center",
+              "size": 'sm',
               "align": "start"
             },
             {
               "type": "button",
+              "height": "sm",
               "action": {
                 "type": "postback",
                 "label": "調べる",
@@ -47,7 +53,8 @@ module LineBot
             "contents": [
               {
                 "type": "text",
-                "text": "中カテゴリ"
+                "size": "lg",
+                "text": @category.name
               }
             ]
           },

@@ -13,7 +13,7 @@ module LineBot
           bubbles << bubble(categories)
         end
 
-        carousel('大カテゴリ検索', bubbles)
+        carousel('料理検索', bubbles)
       end
 
       def category_button(category)
@@ -25,10 +25,12 @@ module LineBot
               "type": "text",
               "text": category.name,
               "gravity": "center",
+              "size": 'sm',
               "align": "start"
             },
             {
               "type": "button",
+              "height": "sm",
               "action": {
                 "type": "postback",
                 "label": "調べる",
@@ -48,7 +50,8 @@ module LineBot
             "contents": [
               {
                 "type": "text",
-                "text": "大カテゴリ"
+                "size": "lg",
+                "text": "料理検索"
               }
             ]
           },

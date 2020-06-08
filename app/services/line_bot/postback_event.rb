@@ -14,8 +14,7 @@ module LineBot
       when 'janken_result'
         LineBot::Messages::JankenResultMessage.new.send(data)
       when 'middle_search'
-        middle_categories = Category.where(parent_category_id: data['category_id'].to_i)
-        LineBot::Messages::MiddleCategoriesMessage.new.send(middle_categories)
+        LineBot::Messages::MiddleCategoriesMessage.new.send(data['category_id'].to_i)
       when 'small_search'
         LineBot::Messages::SmallCategoriesMessage.new.send(data['category_id'].to_i)
       when 'recipe_search'

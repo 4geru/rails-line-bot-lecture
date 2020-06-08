@@ -7,16 +7,18 @@ module LineBot
       include LineBot::Messages::Concern::Carouselable
 
       def send(middle_category_id)
+        @category = Category.find_by(category_id: middle_category_id)
+
         bubbles = []
         small_categories = Category.where(parent_category_id: middle_category_id)
         if small_categories.count == 1
-          LineBot::Messages::UnknownMessage.new.send
+          LineBot::Messages::RecipesMessage.new.send(middle_category_id)
         else
           small_categories.each_slice(5) do |categories|
             bubbles << bubble(categories)
           end
 
-          carousel('小カテゴリ検索', bubbles)
+          carousel("#{@category.name}検索", bubbles)
         end
       end
 
@@ -29,10 +31,12 @@ module LineBot
               "type": "text",
               "text": category.name,
               "gravity": "center",
+              "size": 'sm',
               "align": "start"
             },
             {
               "type": "button",
+              "height": "sm",
               "action": {
                 "type": "postback",
                 "label": "調べる",
@@ -52,7 +56,8 @@ module LineBot
             "contents": [
               {
                 "type": "text",
-                "text": "小カテゴリ"
+                "size": "lg",
+                "text": @category.name
               }
             ]
           },
