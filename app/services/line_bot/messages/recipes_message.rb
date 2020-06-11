@@ -98,26 +98,6 @@ module LineBot
                         "flex": 3
                       }
                     ]
-                  },
-                  {
-                    "type": "box",
-                    "layout": "baseline",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "💰コスト",
-                        "flex": 1,
-                        "size": "sm",
-                        "color": "#aaaaaa"
-                      },
-                      {
-                        "type": "text",
-                        "text": recipe['recipeCost'],
-                        "flex": 3,
-                        "size": "sm",
-                        "color": "#666666"
-                      }
-                    ]
                   }
                 ]
               }

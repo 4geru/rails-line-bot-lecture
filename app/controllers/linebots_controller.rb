@@ -40,19 +40,26 @@ class LinebotsController < ApplicationController
     when Line::Bot::Event::Postback
       LineBot::PostbackEvent.send(event['postback']['data'])
     when Line::Bot::Event::Message
-      # event['message']['text'] = ユーザーが送ってきた
-      if event['message']['text'] =~ /カテゴリ/
-        LineBot::Messages::LargeCategoriesMessage.new.send
-      elsif event['message']['text'] =~ /FlexMessage/
-        LineBot::Messages::SampleMessage.new.send
-      elsif  event['message']['text'] =~ /じゃんけん/
-        LineBot::Messages::JankenMessage.new.send
-      else
-        {
-          type: 'text',
-          text: event['message']['text']
-        }
-        nil
+      case event['message']['type']
+      when 'sticker' # スタンプイベントの時
+        # === ここに追加する ===
+        # === ここに追加する ===
+      when 'text' # メッセージイベントの時
+        # event['message']['text'] = ユーザーが送ってきた
+        if event['message']['text'] =~ /カテゴリ/
+          LineBot::Messages::LargeCategoriesMessage.new.send
+        elsif event['message']['text'] =~ /FlexMessage/
+          LineBot::Messages::SampleMessage.new.send
+        elsif event['message']['text'] =~ /じゃんけん/
+          LineBot::Messages::JankenMessage.new.send
+        # === ここに追加する ===
+        # === ここに追加する ===
+        else
+          {
+            "type": "text",
+            "text": event['message']['text']
+          }
+        end
       end
     end
   end

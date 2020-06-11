@@ -34,6 +34,7 @@ module LineBot
               "action": {
                 "type": "postback",
                 "label": "調べる",
+                "displayText": category.name,
                 "data": "type=middle_search&category_id=#{category.category_id}"
               }
             }
