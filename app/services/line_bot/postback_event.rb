@@ -17,8 +17,10 @@ module LineBot
         LineBot::Messages::MiddleCategoriesMessage.new.send(data['category_id'].to_i)
       when 'small_search'
         LineBot::Messages::SmallCategoriesMessage.new.send(data['category_id'].to_i)
+      # === ここに追加する ===
       when 'recipe_search'
         LineBot::Messages::RecipesMessage.new.send(data['category_id'].to_i)
+      # === ここに追加する ===
       else
         LineBot::Messages::UnknownMessage.new.send
       end

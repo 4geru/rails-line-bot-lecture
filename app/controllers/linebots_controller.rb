@@ -40,19 +40,50 @@ class LinebotsController < ApplicationController
     when Line::Bot::Event::Postback
       LineBot::PostbackEvent.send(event['postback']['data'])
     when Line::Bot::Event::Message
-      # event['message']['text'] = ユーザーが送ってきた
-      if event['message']['text'] =~ /カテゴリ/
-        LineBot::Messages::LargeCategoriesMessage.new.send
-      elsif event['message']['text'] =~ /FlexMessage/
-        LineBot::Messages::SampleMessage.new.send
-      elsif  event['message']['text'] =~ /じゃんけん/
-        LineBot::Messages::JankenMessage.new.send
-      else
+      case event['message']['type']
+      when 'sticker' # スタンプイベントの時
+        # === ここに追加する ===
         {
-          type: 'text',
-          text: event['message']['text']
+          "type": "sticker",
+          "packageId": '11537',
+          "stickerId": '52002740'
         }
-        nil
+        # === ここに追加する ===
+      when 'text' # メッセージイベントの時
+        # event['message']['text'] = ユーザーが送ってきた
+        if event['message']['text'] =~ /カテゴリ/
+          LineBot::Messages::LargeCategoriesMessage.new.send
+        elsif event['message']['text'] =~ /FlexMessage/
+          LineBot::Messages::SampleMessage.new.send
+        elsif event['message']['text'] =~ /じゃんけん/
+          LineBot::Messages::JankenMessage.new.send
+        elsif event['message']['text'] =~ /emoji/
+          {
+            "type": "text",
+            "text": "$ LINE emoji $",
+            "emojis": [
+              {
+                "productId": "5ac1bfd5040ab15980c9b435",
+                "emojiId": "001",
+                "index": 0
+              },
+              {
+                "productId": "5ac1bfd5040ab15980c9b435",
+                "emojiId": "002",
+                "index": 13
+              }
+            ]
+          }
+        elsif event['message']['text'] =~ /料理/
+          LineBot::Messages::LargeCategoriesMessage.new.send
+        else
+          translatec_text, emoji_list = LineBot::EmojiWord.new.translate_to_emoji(event['message']['text'])
+          {
+            "type": "text",
+            "text": translatec_text,
+            "emojis": emoji_list
+          }
+        end
       end
     end
   end
